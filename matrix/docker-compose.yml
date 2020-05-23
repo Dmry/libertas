@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  server:
+    image: matrixdotorg/synapse
+    container_name: matrix-synapse
+    restart: always
+    volumes:
+      - data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8008"
+      - "traefik.docker.network=frontend"
+      - "traefik.http.routers.matrix-synapse.entrypoints=websecure"
+      - "traefik.http.routers.matrix-synapse.rule=Host(``)"
+      - "traefik.http.routers.matrix-synapse.tls.certresolver=mytlschallenge"
+    networks:
+      - frontend
+    logging:
+      options:
+        max-size: '12m'
+        max-file: '5'
+      driver: json-file
+volumes:
+  data: {}
+networks:
+  frontend:
+    external: true

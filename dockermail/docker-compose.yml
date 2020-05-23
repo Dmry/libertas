@@ -1,0 +1,59 @@
+version: '3.3'
+
+services:
+  postfix:
+    build: ./postfix
+    restart: on-failure
+    container_name: postfix
+    ports:
+      - "25:25"
+    networks:
+      - backend
+      - default
+    volumes:
+      - dovecot_sasl:/var/spool/postfix/private/dovecot
+      # for fail2ban
+      - /var/log/postfix/:/var/log/
+      # opendkim config
+      - /etc/opendkim/mail:/etc/opendkim/mail
+      - /etc/letsencrypt/archive/[[ DOMAIN ]]/fullchain1.pem:/etc/ssl/certs/postfix.pem
+      - /etc/letsencrypt/archive/[[ DOMAIN ]]/privkey1.pem:/etc/ssl/private/postfix.pem
+    depends_on:
+      - "dovecot"
+      - "av"
+    
+  dovecot:
+    build: ./dovecot
+    restart: on-failure
+    container_name: dovecot
+    ports:
+      - "993:993"
+    networks:
+      - backend
+      - default
+    volumes:
+      - dovecot_sasl:/var/spool/postfix/private/dovecot
+      - maildir:/mail
+      # for fail2ban
+      - /var/log/dovecot/:/var/log/
+      - /etc/letsencrypt/archive/[[ DOMAIN ]]/fullchain1.pem:/etc/ssl/certs/dovecot.pem
+      - /etc/letsencrypt/archive/[[ DOMAIN ]]/privkey1.pem:/etc/ssl/private/dovecot.pem
+
+  av:
+    build: ./clamav
+    container_name: av
+    restart: on-failure
+    networks:
+      - default
+    expose:
+      - '6666'
+
+      
+volumes:
+  dovecot_sasl: {}
+  mysql_db: {}
+  maildir: {}
+
+networks:
+  backend:
+    external: true

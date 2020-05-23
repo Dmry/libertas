@@ -1,0 +1,17 @@
+[Unit]
+Description=Dockermail
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+
+# Compose up
+ExecStart=/usr/bin/docker-compose -f /home/daniel/dockermail/docker-compose.yml up
+
+# Compose down, remove containers and volumes
+ExecStop=/usr/bin/docker-compose -f /home/daniel/dockermail/docker-compose.yml down
+
+[Install]
+WantedBy=multi-user.target
+

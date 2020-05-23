@@ -1,0 +1,11 @@
+[Unit]
+Description=Libertas %I
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/docker-compose -f /home/daniel/libertas/%i/docker-compose.yml up
+ExecStop=/usr/bin/docker-compose -f /home/daniel/libertas/%i/docker-compose.yml down
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

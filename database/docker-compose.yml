@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    networks:
+      - backend
+    expose:
+      - 3306
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./scripts/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_INITDB_SKIP_TZINFO=1
+    restart: unless-stopped
+
+volumes:
+  mariadb: {}
+
+networks:
+  backend:
+    external: true

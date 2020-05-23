@@ -1,0 +1,54 @@
+version: "3.3"
+
+services:
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud_app
+    networks:
+      - frontend
+      - backend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.http.routers.nextcloud.entrypoints=websecure"
+      - "traefik.http.routers.nextcloud.rule=Host(``)"
+      - "traefik.http.routers.nextcloud.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.nextcloud.middlewares=nextcloud@docker"
+      - "traefik.docker.network=frontend"
+      - "traefik.http.middlewares.nextcloud.chain.middlewares=nc-headers,nc-redirect,nc-https"
+      - "traefik.http.middlewares.nc-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.nc-https.redirectscheme.permanent=true"
+      - "traefik.http.middlewares.nc-redirect.redirectregex.regex=https://(.*)/.well-known/(card|cal)dav"
+      - "traefik.http.middlewares.nc-redirect.redirectregex.replacement=https://$$1/remote.php/dav/"
+      - "traefik.http.middlewares.nc-redirect.redirectregex.permanent=true"
+      - "traefik.http.middlewares.nc-headers.headers.customFrameOptionsValue=SAMEORIGIN"
+      - "traefik.http.middlewares.nc-headers.headers.framedeny=true"
+      - "traefik.http.middlewares.nc-headers.headers.sslredirect=true"
+      - "traefik.http.middlewares.nc-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.nc-headers.headers.stsPreload=true"
+      - "traefik.http.middlewares.nc-headers.headers.stsSeconds=15552000"
+    volumes:
+      - nextcloud_main:/var/www/html
+      - nextcloud_apps:/var/www/html/custom_apps
+      - nextcloud_config:/var/www/html/config
+      - nextcloud_data:/var/www/html/data
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=
+      - MYSQL_HOST=mariadb
+    restart: unless-stopped
+
+volumes:
+  nextcloud_main: {}
+  nextcloud_apps: {}
+  nextcloud_config: {}
+  nextcloud_data: {}
+
+networks:
+  frontend:
+    external:
+      name: frontend
+  backend:
+    external: true
