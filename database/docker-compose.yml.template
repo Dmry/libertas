@@ -14,8 +14,8 @@ services:
       - mariadb:/var/lib/mysql
       - ./scripts/db-init.sql:/docker-entrypoint-initdb.d/db-init.sql
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_PASSWORD=
+      - MYSQL_ROOT_PASSWORD={{ database.passwords.root }}
+      - MYSQL_PASSWORD={{ database.passwords.user }}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_INITDB_SKIP_TZINFO=1

@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-LABEL maintainer="Daniël Emmery : github.com/dmry"
-
 RUN addgroup -g 3001 postfix &&\
     adduser -D -s /sbin/nologin -u 2001 -G postfix postfix &&\
     addgroup -g 3002 opendmarc &&\
@@ -14,9 +12,9 @@ RUN apk update && apk add -uU openssl ca-certificates postfix postfix-mysql open
     rm -rf /var/cache/apk/* &&\
     echo "0       4       *       *       *       apk update && apk upgrade > /var/log/cron-apk.log" >> /var/spool/cron/crontabs/root
 
-RUN echo "dmry.nl dmry.nl:mail:/etc/opendkim/mail" > /etc/opendkim/KeyTable &&\
-    echo "*@dmry.nl dmry.nl"                       > /etc/opendkim/SigningTable &&\
-    echo "127.0.0.1"                               > /etc/opendkim/TrustedHosts
+RUN echo "{{ general.domain }} {{ general.domain }}:mail:/etc/opendkim/mail" > /etc/opendkim/KeyTable &&\
+    echo "*@{{ general.domain }} {{ general.domain }}"                       > /etc/opendkim/SigningTable &&\
+    echo "127.0.0.1"                                                         > /etc/opendkim/TrustedHosts
 
 COPY ./opendkim.conf /etc/opendkim/
 RUN install -d -o opendkim -g opendkim /var/run/opendkim -m 750

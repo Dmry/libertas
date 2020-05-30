@@ -68,7 +68,7 @@ driver = mysql
 #   connect = host=sql.example.com dbname=virtual user=virtual password=blarg
 #   connect = /etc/dovecot/authdb.sqlite
 #
-connect = host=mariadb port=3306 dbname=mailserver user=mailuser password=
+connect = host=mariadb port=3306 dbname=mailserver user=mailuser password={{ dockermail.server.passwords.mysql_user }}
 
 # Default password scheme.
 #

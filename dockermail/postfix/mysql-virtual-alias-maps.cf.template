@@ -1,5 +1,5 @@
 user = mailuser
-password = 
+password = {{ dockermail.server.passwords.mysql_user }}
 hosts = mariadb
 dbname = mailserver
 query = SELECT destination FROM virtual_aliases WHERE source='%s'

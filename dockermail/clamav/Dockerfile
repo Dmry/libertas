@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-LABEL maintainer="Daniël Emmery : github.com/dmry"
-
 RUN apk add -uU clamav clamav-milter freshclam supervisor && \
     rm -rf /var/cache/apk/* &&\
     echo "0       4       *       *       *       apk update && apk upgrade > /var/log/cron-apk.log" >> /var/spool/cron/crontabs/root

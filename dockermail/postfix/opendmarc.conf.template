@@ -1,16 +1,16 @@
-AuthservID mail.maildomain.com
+AuthservID {{ general.domain }}
 PidFile /var/run/opendmarc/opendmarc.pid
 RejectFailures false
 Syslog true
 SyslogFacility mail
-TrustedAuthservIDs mail.maildomain.com
+TrustedAuthservIDs {{ general.domain }}
 IgnoreHosts /etc/opendmarc/ignore.hosts
 UMask 002
 UserID opendkim:opendkim
 TemporaryDirectory /tmp
 Socket unix:/var/run/opendmarc/opendmarc.sock
-FailureReportsSentBy postmaster@maildomain.com
-FailureReportsBcc postmaster@maildomain.com
+FailureReportsSentBy postmaster@{{ general.domain }}
+FailureReportsBcc postmaster@{{ general.domain }}
 FailureReports false
 AutoRestart true
 PublicSuffixList /etc/effective_tld_names.dat

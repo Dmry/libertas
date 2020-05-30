@@ -28,13 +28,13 @@ CREATE TABLE `virtual_aliases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE USER mailuser
-BY '';
+IDENTIFIED BY '{{ dockermail.server.passwords.mysql_user }}';
 
-GRANT SELECT ON mailserver.* TO mailuser IDENTIFIED BY '';
+GRANT SELECT ON mailserver.* TO mailuser IDENTIFIED BY '{{ dockermail.server.passwords.mysql_user }}';
 
 
 INSERT INTO `mailserver`.`virtual_domains`
   (`id` ,`name`)
 VALUES
-  ('1', '');
+  ('1', '{{ general.domain }}');
 

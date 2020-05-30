@@ -12,7 +12,7 @@ services:
       - "traefik.port=8008"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.matrix-synapse.entrypoints=websecure"
-      - "traefik.http.routers.matrix-synapse.rule=Host(``)"
+      - "traefik.http.routers.matrix-synapse.rule=Host(`{{ matrix.domain }}`)"
       - "traefik.http.routers.matrix-synapse.tls.certresolver=mytlschallenge"
     networks:
       - frontend

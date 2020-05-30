@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-LABEL maintainer="Daniël Emmery : github.com/dmry"
-
 RUN addgroup -g 3001 dovecot
 RUN addgroup -g 3003 postfix
 RUN adduser -D -s /sbin/nologin -u 2001 -G dovecot dovecot

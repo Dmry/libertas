@@ -1,5 +1,5 @@
 user = mailuser
-password =
+password = {{ dockermail.server.passwords.mysql_user }}
 hosts = mariadb
 dbname = mailserver
 query = SELECT 1 FROM virtual_domains WHERE name='%s'

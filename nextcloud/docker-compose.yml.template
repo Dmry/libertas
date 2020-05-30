@@ -12,7 +12,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.routers.nextcloud.rule=Host(``)"
+      - "traefik.http.routers.nextcloud.rule=Host(`{{ general.domain }}`, `www.{{ general.domain }}`)"
       - "traefik.http.routers.nextcloud.tls.certresolver=mytlschallenge"
       - "traefik.http.routers.nextcloud.middlewares=nextcloud@docker"
       - "traefik.docker.network=frontend"
@@ -36,7 +36,7 @@ services:
     environment:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=
+      - MYSQL_PASSWORD={{ database.passwords.user }}
       - MYSQL_HOST=mariadb
     restart: unless-stopped
 

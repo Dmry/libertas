@@ -1,0 +1,24 @@
+[general]
+    libertas_root = "/home/user/libertas" # NO TRAILING SLASHES!
+    domain = "mydomain.com"
+
+[database]
+    [database.passwords]
+    root = "CnCQPKA6tQLTuY8WcV4UCT6m"
+    user = "Z9zrNsKMVYTxXg7VqZjLqy7d"
+
+[dockermail]
+    [dockermail.server]
+        [dockermail.server.passwords]
+            mysql_user = "QzkLdTQs6E948nNc6CLTuuySq57Y"
+
+    [dockermail.client]
+        [dockermail.client.users]
+            [dockermail.client.user.myuser]
+                password = "someconvenientbutlongpasswordwithabitofrandomness4!2as"
+
+[traefik]
+    acme_email = "user@mydomain.com"
+
+[matrix]
+    domain = "matrix.mydomain.com"

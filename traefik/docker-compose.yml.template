@@ -12,7 +12,7 @@ services:
       - --entrypoints.websecure.address=:443
       - --certificatesresolvers.mytlschallenge.acme.tlschallenge=true
       #- "--certificatesresolvers.mytlschallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - --certificatesresolvers.mytlschallenge.acme.email=
+      - --certificatesresolvers.mytlschallenge.acme.email={{ traefik.acme_email }}
       - --certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json
       - --providers.file.directory=/dynamic_config
       - --providers.file.watch=true
