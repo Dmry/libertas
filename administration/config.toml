@@ -1,3 +1,6 @@
+# WARNING: Passwords are currently only set for the initial setup. If you want to change
+#          your passwords later, you will have to do so manually.
+
 [general]
     libertas_root = "/home/user/libertas" # NO TRAILING SLASHES!
     domain = "mydomain.com"
