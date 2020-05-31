@@ -45,7 +45,8 @@ parser_mail = sub.add_parser('mail', help='Manage mail dependencies and database
 sub_parser_mail = parser_mail.add_subparsers()
 
 maildb_function_map = {'clean'  : database.clean,
-                       'setup'  : database.init_database}
+                       'setup'  : database.init_database,
+                       'adduser': database.add_user}
 
 parser_mail_database = sub_parser_mail.add_parser('database', help='Manage mail database.')
 parser_mail_database.add_argument('maildb_command', choices=maildb_function_map.keys())
