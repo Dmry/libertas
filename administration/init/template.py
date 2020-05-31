@@ -54,7 +54,7 @@ def render():
 def install_package(cache, name):
     pkg = cache[name]
     if pkg.is_installed:
-        print "{name} already installed".format(name=name)
+        print(f"{name} already installed")
     else:
         pkg.mark_install()
 
@@ -62,6 +62,12 @@ def install_package(cache, name):
 
 def dependencies():
     check_root()
+
+    answer = ""
+    while answer not in ["y", "n"]:
+        answer = raw_input("This will install software on your computer.\n If you're sceptical, please check out administration/init/template.py.\n Continue [Y/N]? ").lower()
+    if answer == "n":
+        return
     
     cache = apt.cache.Cache()
     cache.update()
