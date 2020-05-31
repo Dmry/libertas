@@ -1,6 +1,6 @@
 import argparse
 
-from init import template, dependencies
+from base import template, dependencies
 from services import services
 from mail import database, setup
 
@@ -13,15 +13,15 @@ parser = argparse.ArgumentParser(description='Administration tool for routine ta
 sub = parser.add_subparsers()
 
 '''
-Configuration templating
+Base setup: config templating & core dependencies
 '''
 
-init_function_map = {'clean'  : template.clean,
+base_function_map = {'clean'  : template.clean,
                      'render' : template.render,
                      'dependencies' : dependencies.dependencies}
 
-parser_init = sub.add_parser('init', help='Initialize and manage configuration files.')
-parser_init.add_argument('init_command', choices=init_function_map.keys())
+parser_init = sub.add_parser('base', help='Configuration templating & core dependencies.')
+parser_init.add_argument('base_command', choices=base_function_map.keys())
 
 
 '''
@@ -37,25 +37,23 @@ parser_services.add_argument('target', choices=services_list)
 
 
 '''
-Mail database management
+Mail configuration
 '''
+
+parser_mail = sub.add_parser('mail', help='Manage mail dependencies and database')
+sub_parser_mail = parser_mail.add_subparsers()
 
 maildb_function_map = {'clean'  : database.clean,
                        'setup'  : database.init_database}
 
-parser_maildb = sub.add_parser('maildb', help='Manage mail database.')
-parser_maildb.add_argument('maildb_command', choices=maildb_function_map.keys())
+parser_mail_database = sub_parser_mail.add_parser('database', help='Manage mail database.')
+parser_mail_database.add_argument('maildb_command', choices=maildb_function_map.keys())
 
+maildep_function_map = {'opendkim'     : setup.opendkim,
+                        'letsencrypt'  : setup.letsencrypt}
 
-'''
-Mail setup
-'''
-
-mailsetup_function_map = {'opendkim'     : setup.opendkim,
-                          'letsencrypt'  : setup.letsencrypt}
-
-parser_mailsetup = sub.add_parser('mailsetup', help='Setting up dependencies for mail.')
-parser_mailsetup.add_argument('mailsetup_command', choices=mailsetup_function_map.keys())
+parser_mail_dependencies = sub_parser_mail.add_parser('dependencies', help='Setting up dependencies for mail.')
+parser_mail_dependencies.add_argument('maildep_command', choices=maildep_function_map.keys())
 
 
 '''
@@ -64,8 +62,8 @@ Parse
 
 args = parser.parse_args()
 
-if (hasattr(args, 'init_command')):
-    execute = init_function_map[args.init_command]()
+if (hasattr(args, 'base_command')):
+    execute = base_function_map[args.base_command]()
 
 if (hasattr(args, 'services_command')):
     services_function_map[args.services_command](args.target)
@@ -73,5 +71,5 @@ if (hasattr(args, 'services_command')):
 if (hasattr(args, 'maildb_command')):
     execute = maildb_function_map[args.maildb_command]()
 
-if (hasattr(args, 'mailsetup_command')):
-    execute = mailsetup_function_map[args.mailsetup_command]()
+if (hasattr(args, 'maildep_command')):
+    execute = maildep_function_map[args.maildep_command]()

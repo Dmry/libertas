@@ -1,4 +1,4 @@
-from utils.utils import check_root, chown_recursive
+from utilities.utilities import check_root, chown_recursive
 from init.template import get_config
 from init.dependencies import install_packages
 from pathlib import Path
@@ -32,7 +32,7 @@ def opendkim():
 def letsencrypt():
     check_root()
 
-    package_list = ['letsencrypt']
+    package_list = ['certbot']
 
     domain = get_config()['general']['domain']
 
