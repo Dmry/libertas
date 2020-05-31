@@ -18,7 +18,7 @@ Some general remarks about the containers:
 * Dovecot and Postfix containers are based on [Alpine Linux](https://www.alpinelinux.org/). MySQL is pulled from the official repository (see [dockerhub page](https://hub.docker.com/r/mysql/mysql-server)).
 * Only the Dovecot and Postmap containers expose one port each to the internet. Containers establish connections to each other on docker's isolated network or access sockets through shared volumes.
 * Data is persisted using docker volumes see running volumes `docker volume list`. Optional backups up will be automated at a later stage. For now, docker volumes can be backed up by following [this doc](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes).
-* Containers update the packages contained within them daily using the apk package manager. The base images (Alpine and MySQL) have to be updated manually be rebuilding the container. I'll soon implement watchtower to automate this.
+* Containers update the packages contained within them daily using the apk package manager. The base images (Alpine) have to be updated manually be rebuilding the container.
 * Supervisor is used to start processes and log their output.
 
 ## Requirements
