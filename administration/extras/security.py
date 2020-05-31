@@ -17,10 +17,10 @@ def fail2ban():
     containers = ['dovecot', 'postfix']
 
     for item in containers:
-        copy(f"fail2ban-{item}-action.conf", "/etc/fail2ban/action.d/")
-        copy(f"fail2ban-{item}-filter.conf", "/etc/fail2ban/filter.d/")
+        copy(f"./extras/fail2ban/fail2ban-{item}-action.conf", "/etc/fail2ban/action.d/")
+        copy(f"./extras/fail2ban/fail2ban-{item}-filter.conf", "/etc/fail2ban/filter.d/")
 
-    copy("jail.local", "/etc/fail2ban/")
+    copy("./extras/fail2ban/jail.local", "/etc/fail2ban/")
 
     ssh_port = input("ssh port?")
 
