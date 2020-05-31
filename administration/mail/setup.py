@@ -1,6 +1,6 @@
 from utilities.utilities import check_root, chown_recursive
-from init.template import get_config
-from init.dependencies import install_packages
+from base.template import get_config
+from base.dependencies import install_packages
 from pathlib import Path
 
 import shutil, os, grp, pwd
