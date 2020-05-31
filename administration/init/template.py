@@ -6,6 +6,16 @@ import toml
 # For finding template files
 import os
 
+# For installing dependencies
+import apt
+
+# For root check
+import sys
+
+def check_root():
+    if (os.getuid() != 0):
+        sys.exit("Please execute this command as root.")
+
 # Load all template file locations in current directory
 def get_template_list():
     template_list = []
@@ -36,8 +46,32 @@ def render():
 
         # Fill in the template
         result = template.render(config_data)
-
         # Write result to file without the .template extension
         outfile = open(os.path.splitext(template_file)[0], 'w')
         outfile.write(result)
         outfile.close()
+
+def install_package(cache, name):
+    pkg = cache[name]
+    if pkg.is_installed:
+        print "{name} already installed".format(name=name)
+    else:
+        pkg.mark_install()
+
+        cache.commit()
+
+def dependencies():
+    check_root()
+    
+    cache = apt.cache.Cache()
+    cache.update()
+    cache.open()
+
+    package_list = ["docker.io", "docker-compose", "python3-toml", "python3-jinja2"]
+
+    for package in package_list:
+        install_package(cache, package)
+
+    os.system("systemctl start docker")
+    os.system("docker network create backend")
+    os.system("docker network create frontend")

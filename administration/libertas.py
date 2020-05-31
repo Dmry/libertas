@@ -1,7 +1,7 @@
 import argparse
 
-from init import template as template
-from systemd import services as services
+from init import template
+from services import services
 
 services_list = ['database', 'dockermail', 'matrix', 'nextcloud', 'ouroboros', 'traefik']
 
@@ -14,7 +14,8 @@ Configuration templating
 '''
 
 init_function_map = {'clean'  : template.clean,
-                     'render' : template.render}
+                     'render' : template.render,
+                     'dependencies' : template.dependencies}
 
 parser_init = sub.add_parser('init', help='Initialize and manage configuration files.')
 parser_init.add_argument('init_command', choices=init_function_map.keys())

@@ -1,6 +1,9 @@
 # WARNING: Passwords are currently only set for the initial setup. If you want to change
 #          your passwords later, you will have to do so manually.
 
+# NOTE:    The passwords listed by default in this file are meant as an example,
+#          please replace!
+
 [general]
     libertas_root = "/home/user/libertas" # NO TRAILING SLASHES!
     domain = "mydomain.com"
@@ -18,7 +21,7 @@
     [dockermail.client]
         [dockermail.client.users]
             [dockermail.client.user.myuser]
-                password = "someconvenientbutlongpasswordwithabitofrandomness4!2as"
+                password = "some!convenient@$but*long^password*with&a)bit3of6randomness"
 
 [traefik]
     acme_email = "user@mydomain.com"

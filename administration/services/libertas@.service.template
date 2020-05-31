@@ -8,6 +8,7 @@ Type=simple
 ExecStart=/usr/bin/docker-compose -f {{ general.libertas_root }}/%i/docker-compose.yml up
 ExecStop=/usr/bin/docker-compose -f {{ general.libertas_root }}/%i/docker-compose.yml down
 Restart=on-failure
+StartLimitInterval=30
 
 [Install]
 WantedBy=multi-user.target

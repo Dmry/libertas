@@ -1,6 +1,6 @@
 import os, sys, shutil
 
-service_file_source = "systemd/libertas@.service"
+service_file_source = "services/libertas@.service"
 service_file_target = "/etc/systemd/system/libertas@.service"
 service_enabled_path = "/etc/systemd/system/multi-user.target.wants/"
 
@@ -17,7 +17,7 @@ def install(target):
 
         shutil.copyfile(service_file_source, service_file_target)
 
-    command = 'systemctl enable --now libertas@' + target
+    command = 'systemctl enable libertas@' + target
     
     os.system(command)
 

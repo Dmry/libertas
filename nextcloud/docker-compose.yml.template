@@ -38,6 +38,8 @@ services:
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD={{ database.passwords.user }}
       - MYSQL_HOST=mariadb
+      - NEXTCLOUD_TRUSTED_DOMAINS={{ general.domain }}
+      - NC_overwriteprotocol=https
     restart: unless-stopped
 
 volumes:
