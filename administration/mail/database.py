@@ -1,4 +1,4 @@
-import docker, os, sys
+import docker, os, sys, subprocess, getpass
 
 from utilities.utilities import check_root, ask_confirm, check_rendered
 from base.template import get_config
@@ -46,3 +46,28 @@ def init_database():
     sql = open(script_location).read()
 
     exec_sql(container, sql)
+
+def add_user():
+    from passlib.hash import bcrypt
+
+    check_root()
+
+    container = get_database_container()
+
+    username = input("Please specify a username:\n")
+
+    try: 
+        password = getpass.getpass("Password: ")
+        confirm = getpass.getpass("Confirm password: ")
+
+        if password == confirm:
+            hash = bcrypt.using(rounds=5).hash(password)
+        else:
+            sys.exit("Passwords did not match!")
+    except Exception as error: 
+        print('ERROR', error) 
+
+    sql = f"INSERT INTO `mailserver`.`virtual_users` (domain_id, password , email) VALUES ('1', '{hash}', '{username}');"
+
+    exec_sql(container, sql)
+

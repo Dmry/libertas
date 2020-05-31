@@ -2,6 +2,7 @@ from utilities.utilities import check_root, chown_recursive
 from base.template import get_config
 from base.dependencies import install_packages
 from pathlib import Path
+from termcolor import colored
 
 import shutil, os, grp, pwd
 
@@ -27,7 +28,7 @@ def opendkim():
 
     os.system("chmod -R go-rwx /etc/opendkim")
 
-    print("Please add the DNS entry listed in /etc/opendkim/mail.txt to your DNS")
+    print(colored("Please add the DNS entry listed in /etc/opendkim/mail.txt to your DNS", 'red'))
 
 def letsencrypt():
     check_root()
@@ -42,4 +43,11 @@ def letsencrypt():
 
     with open("/var/spool/cron/crontabs/root", 'a') as file:
         file.write("0 4 1 * * letsencrypt renew")
+
+def bcrypt():
+    check_root()
+
+    package_list = ['python3-passlib', 'python3-bcrypt']
+
+    install_packages(package_list)
 

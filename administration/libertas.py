@@ -51,7 +51,8 @@ parser_mail_database = sub_parser_mail.add_parser('database', help='Manage mail 
 parser_mail_database.add_argument('maildb_command', choices=maildb_function_map.keys())
 
 maildep_function_map = {'opendkim'     : setup.opendkim,
-                        'letsencrypt'  : setup.letsencrypt}
+                        'letsencrypt'  : setup.letsencrypt,
+                        'bcrypt'       : setup.bcrypt}
 
 parser_mail_dependencies = sub_parser_mail.add_parser('dependencies', help='Setting up dependencies for mail.')
 parser_mail_dependencies.add_argument('maildep_command', choices=maildep_function_map.keys())
