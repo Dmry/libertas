@@ -6,7 +6,7 @@ import os
 import apt
 
 def install_packages(list):
-    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue?"):
+    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out the corresponding scripts.\nContinue?"):
         return
 
     cache = apt.cache.Cache()
