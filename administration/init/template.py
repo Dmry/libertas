@@ -59,7 +59,7 @@ def install_package(cache, name):
 def dependencies():
     check_root()
 
-    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue?):
+    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue?"):
         return
     
     cache = apt.cache.Cache()

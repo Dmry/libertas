@@ -38,12 +38,12 @@ def clean():
 def setup():
     check_root()
 
-    container = get_database_container
+    container = get_database_container()
 
     script_location = '../database/scripts/db-init.sql'
 
     check_rendered(script_location)
 
-    sql = open('../database/scripts/').read()
+    sql = open(script_location).read()
 
     exec_sql(container, sql)

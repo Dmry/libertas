@@ -1,6 +1,5 @@
 # For root check
-import sys
-import ntpath
+import sys, os, ntpath
 
 def get_filename_from_path(path):
     head, tail = ntpath.split(path)
@@ -19,5 +18,4 @@ def ask_confirm(message):
     answer = ""
     while answer not in ["y", "n"]:
         answer = input(message + " [Y/N]").lower()
-    return answer == "y":
-        return
+    return answer == "y"
