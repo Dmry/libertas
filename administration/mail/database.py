@@ -1,7 +1,7 @@
 import docker, os, sys
 
 from utilities.utilities import check_root, ask_confirm, check_rendered
-from init.template import get_config
+from base.template import get_config
 
 def get_database_container():
     client = docker.from_env()

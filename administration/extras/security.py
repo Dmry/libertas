@@ -1,5 +1,5 @@
 from utilities.utilities import check_root, check_rendered
-from init.dependencies import install_packages
+from base.dependencies import install_packages
 
 import fileinput
 from shutil import copy
