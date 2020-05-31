@@ -66,7 +66,7 @@ def dependencies():
 
     answer = ""
     while answer not in ["y", "n"]:
-        answer = input("This will install software on your computer.\n If you're sceptical, please check out administration/init/template.py.\n Continue [Y/N]? ").lower()
+        answer = input("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue [Y/N]? ").lower()
     if answer == "n":
         return
     
