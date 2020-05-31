@@ -3,6 +3,7 @@ import argparse
 from base import template, dependencies
 from services import services
 from mail import database, setup
+from extras import security
 
 ## TODO: Check current directory to see if we are indeed in libertas/administration
 
@@ -57,6 +58,15 @@ parser_mail_dependencies.add_argument('maildep_command', choices=maildep_functio
 
 
 '''
+Extras
+'''
+
+security_function_map = {'fail2ban' : security.fail2ban}
+
+parser_security = sub.add_parser('security', help='Set up security extras.')
+parser_security.add_argument('security_command', choices=security_function_map.keys())
+
+'''
 Parse
 '''
 
@@ -73,3 +83,6 @@ if (hasattr(args, 'maildb_command')):
 
 if (hasattr(args, 'maildep_command')):
     execute = maildep_function_map[args.maildep_command]()
+
+if (hasattr(args, 'security_command')):
+    execute = security_function_map[args.security_command]()
