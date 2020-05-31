@@ -26,7 +26,7 @@ def install_packages(list):
 def dependencies():
     check_root()
 
-    package_list = ["docker.io", "docker-compose", "python3-toml", "python3-jinja2"]
+    package_list = ["docker.io", "docker-compose", "python3-toml", "python3-jinja2", "python3-termcolor"]
 
     install_packages(package_list)
 
