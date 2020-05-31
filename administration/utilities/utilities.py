@@ -19,3 +19,10 @@ def ask_confirm(message):
     while answer not in ["y", "n"]:
         answer = input(message + " [Y/N]").lower()
     return answer == "y"
+
+def chown_recursive(path, uid, gid):
+    for root, dirs, files in os.walk(path):  
+        for dir in dirs:  
+            os.chown(os.path.join(root, dir), uid, gid)
+        for file in files:
+            os.chown(os.path.join(root, file), uid, gid)

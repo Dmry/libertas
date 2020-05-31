@@ -1,6 +1,7 @@
 import docker, os, sys
 
 from utilities.utilities import check_root, ask_confirm, check_rendered
+from init.template import get_config
 
 def get_database_container():
     client = docker.from_env()
@@ -15,9 +16,7 @@ def get_database_container():
 def exec_sql(container, sql):
     check_root()
 
-    import toml
-
-    config_data = toml.loads(open('./config.toml', 'r').read())
+    config_data = get_config()
 
     container.exec_run("mysql -u root -p" + config_data['database']['passwords']['root'])
 
@@ -35,7 +34,7 @@ def clean():
     # Remove mail donamins
     exec_sql(container, "DELETE FROM `mailserver`.`virtual_domains`")
 
-def setup():
+def init_database():
     check_root()
 
     container = get_database_container()

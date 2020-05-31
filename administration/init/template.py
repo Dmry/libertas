@@ -7,8 +7,11 @@ from utilities.utilities import check_root, ask_confirm
 # For finding template files
 import os
 
-# For installing dependencies
-import apt
+def get_config():
+    import toml
+
+    # Load config for Jinja
+    return toml.loads(open('./config.toml', 'r').read())
 
 # Load all template file locations in current directory
 def get_template_list():
@@ -29,10 +32,7 @@ def clean():
             os.remove(file)
 
 def render():
-    import toml
-
-    # Load config for Jinja
-    config_data = toml.loads(open('./config.toml', 'r').read())
+    config_data = get_config()
 
     # Set up Jinja environment
     env = Environment(loader = FileSystemLoader('/'), trim_blocks=True, lstrip_blocks=True)
@@ -46,31 +46,3 @@ def render():
         outfile = open(os.path.splitext(template_file)[0], 'w')
         outfile.write(result)
         outfile.close()
-
-def install_package(cache, name):
-    pkg = cache[name]
-    if pkg.is_installed:
-        print(f"{name} already installed")
-    else:
-        pkg.mark_install()
-
-        cache.commit()
-
-def dependencies():
-    check_root()
-
-    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue?"):
-        return
-    
-    cache = apt.cache.Cache()
-    cache.update()
-    cache.open()
-
-    package_list = ["docker.io", "docker-compose", "python3-toml", "python3-jinja2"]
-
-    for package in package_list:
-        install_package(cache, package)
-
-    os.system("systemctl start docker")
-    os.system("docker network create backend")
-    os.system("docker network create frontend")

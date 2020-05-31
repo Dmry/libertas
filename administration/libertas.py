@@ -1,8 +1,8 @@
 import argparse
 
-from init import template
+from init import template, dependencies
 from services import services
-from mail import mail
+from mail import database, setup
 
 ## TODO: Check current directory to see if we are indeed in libertas/administration
 
@@ -18,7 +18,7 @@ Configuration templating
 
 init_function_map = {'clean'  : template.clean,
                      'render' : template.render,
-                     'dependencies' : template.dependencies}
+                     'dependencies' : dependencies.dependencies}
 
 parser_init = sub.add_parser('init', help='Initialize and manage configuration files.')
 parser_init.add_argument('init_command', choices=init_function_map.keys())
@@ -40,11 +40,22 @@ parser_services.add_argument('target', choices=services_list)
 Mail database management
 '''
 
-maildb_function_map = {'clean'  : mail.clean,
-                       'setup'  : mail.setup}
+maildb_function_map = {'clean'  : database.clean,
+                       'setup'  : database.init_database}
 
 parser_maildb = sub.add_parser('maildb', help='Manage mail database.')
-parser_maildb.add_argument('mail_command', choices=maildb_function_map.keys())
+parser_maildb.add_argument('maildb_command', choices=maildb_function_map.keys())
+
+
+'''
+Mail setup
+'''
+
+mailsetup_function_map = {'opendkim'     : setup.opendkim,
+                          'letsencrypt'  : setup.letsencrypt}
+
+parser_mailsetup = sub.add_parser('mailsetup', help='Setting up dependencies for mail.')
+parser_mailsetup.add_argument('mailsetup_command', choices=mailsetup_function_map.keys())
 
 
 '''
@@ -59,5 +70,8 @@ if (hasattr(args, 'init_command')):
 if (hasattr(args, 'services_command')):
     services_function_map[args.services_command](args.target)
 
-if (hasattr(args, 'mail_command')):
-    execute = maildb_function_map[args.mail_command]()
+if (hasattr(args, 'maildb_command')):
+    execute = maildb_function_map[args.maildb_command]()
+
+if (hasattr(args, 'mailsetup_command')):
+    execute = mailsetup_function_map[args.mailsetup_command]()
