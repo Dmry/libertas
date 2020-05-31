@@ -35,7 +35,7 @@ def clean():
 
 def render():
     import toml
-    
+
     # Load config for Jinja
     config_data = toml.loads(open('./config.toml', 'r').read())
 
@@ -66,7 +66,7 @@ def dependencies():
 
     answer = ""
     while answer not in ["y", "n"]:
-        answer = raw_input("This will install software on your computer.\n If you're sceptical, please check out administration/init/template.py.\n Continue [Y/N]? ").lower()
+        answer = input("This will install software on your computer.\n If you're sceptical, please check out administration/init/template.py.\n Continue [Y/N]? ").lower()
     if answer == "n":
         return
     
