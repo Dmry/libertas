@@ -2,6 +2,9 @@ import argparse
 
 from init import template
 from services import services
+from mail import mail
+
+## TODO: Check current directory to see if we are indeed in libertas/administration
 
 services_list = ['database', 'dockermail', 'matrix', 'nextcloud', 'ouroboros', 'traefik']
 
@@ -34,6 +37,17 @@ parser_services.add_argument('target', choices=services_list)
 
 
 '''
+Mail database management
+'''
+
+maildb_function_map = {'clean'  : mail.clean,
+                       'setup'  : mail.setup}
+
+parser_maildb = sub.add_parser('maildb', help='Manage mail database.')
+parser_maildb.add_argument('mail_command', choices=maildb_function_map.keys())
+
+
+'''
 Parse
 '''
 
@@ -44,3 +58,6 @@ if (hasattr(args, 'init_command')):
 
 if (hasattr(args, 'services_command')):
     services_function_map[args.services_command](args.target)
+
+if (hasattr(args, 'mail_command')):
+    execute = maildb_function_map[args.mail_command]()

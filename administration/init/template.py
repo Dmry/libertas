@@ -1,5 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 
+from utilities.utilities import check_root, ask_confirm
+
 # Scoped import for toml below, as not to error upon dependency install
 
 # For finding template files
@@ -7,13 +9,6 @@ import os
 
 # For installing dependencies
 import apt
-
-# For root check
-import sys
-
-def check_root():
-    if (os.getuid() != 0):
-        sys.exit("Please execute this command as root.")
 
 # Load all template file locations in current directory
 def get_template_list():
@@ -64,10 +59,7 @@ def install_package(cache, name):
 def dependencies():
     check_root()
 
-    answer = ""
-    while answer not in ["y", "n"]:
-        answer = input("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue [Y/N]? ").lower()
-    if answer == "n":
+    if not ask_confirm("This will install software on your computer.\nIf you're sceptical, please check out administration/init/template.py.\nContinue?):
         return
     
     cache = apt.cache.Cache()

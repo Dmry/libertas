@@ -1,19 +1,16 @@
 import os, sys, shutil
 
+from utilities.utilities import check_root, check_rendered
+
 service_file_source = "services/libertas@.service"
 service_file_target = "/etc/systemd/system/libertas@.service"
 service_enabled_path = "/etc/systemd/system/multi-user.target.wants/"
-
-def check_root():
-    if (os.getuid() != 0):
-        sys.exit("Please execute this command as root.")
 
 def install(target):
     check_root()
 
     if not os.path.exists(service_file_target):
-        if not os.path.exists(service_file_source):
-            sys.exit("Rendered libertas@.service not found, please render template using the command 'init render'.")
+        check_rendered(service_file_source)
 
         shutil.copyfile(service_file_source, service_file_target)
 
