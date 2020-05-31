@@ -1,7 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 
-# Used for user configuration
-import toml
+# Scoped import for toml below, as not to error upon dependency install
 
 # For finding template files
 import os
@@ -35,6 +34,8 @@ def clean():
             os.remove(file)
 
 def render():
+    import toml
+    
     # Load config for Jinja
     config_data = toml.loads(open('./config.toml', 'r').read())
 
