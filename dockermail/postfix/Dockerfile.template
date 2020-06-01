@@ -57,6 +57,8 @@ RUN mkdir -p /var/spool/postfix/private/dovecot
 
 RUN postconf maillog_file=/var/log/postfix.log
 
+RUN chown -R opendkim:opendkim /etc/opendkim
+
 COPY ./supervisord.d/*.ini /etc/supervisord.d/
 COPY supervisord.conf /etc/
 
