@@ -2,8 +2,6 @@ from utilities.utilities import check_root, chown_recursive
 from base.template import get_config
 from base.dependencies import install_packages
 from pathlib import Path
-from termcolor import colored
-
 import shutil, os, grp, pwd
 
 def opendkim():
@@ -28,7 +26,7 @@ def opendkim():
 
     os.system("chmod -R go-rwx /etc/opendkim")
 
-    print(colored("Please add the DNS entry listed in /etc/opendkim/mail.txt to your DNS", 'red'))
+    print("Please add the DNS entry listed in /etc/opendkim/mail.txt to your DNS", 'red')
 
 def letsencrypt():
     check_root()
