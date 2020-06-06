@@ -23,8 +23,8 @@ COPY ./opendmarc.conf /etc/opendmarc/opendmarc.conf
 COPY ./ignore.hosts /etc/opendmarc/ignore.hosts
 RUN install -d -o postfix -g postfix /var/run/opendmarc -m 750
 
-RUN postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/{{ domain.general }}/fullchain.pem &&\
-    postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/{{ domain.general }}/privkey.pem &&\
+RUN postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/{{ general.domain }}/fullchain.pem &&\
+    postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/{{ general.domain }}/privkey.pem &&\
     postconf -e smtpd_use_tls=yes &&\
     postconf -e smtpd_tls_auth_only=yes &&\
     postconf -e smtp_tls_security_level=may &&\
