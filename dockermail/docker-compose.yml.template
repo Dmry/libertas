@@ -16,8 +16,7 @@ services:
       - /var/log/postfix/:/var/log/
       # opendkim config
       - /etc/opendkim/mail:/etc/opendkim/mail
-      - /etc/letsencrypt/archive/{{ general.domain }}/fullchain1.pem:/etc/ssl/certs/postfix.pem
-      - /etc/letsencrypt/archive/{{ general.domain }}/privkey1.pem:/etc/ssl/private/postfix.pem
+      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - "dovecot"
       - "av"
@@ -36,8 +35,7 @@ services:
       - maildir:/mail
       # for fail2ban
       - /var/log/dovecot/:/var/log/
-      - /etc/letsencrypt/archive/{{ general.domain }}/fullchain1.pem:/etc/ssl/certs/dovecot.pem
-      - /etc/letsencrypt/archive/{{ general.domain }}/privkey1.pem:/etc/ssl/private/dovecot.pem
+      - /etc/letsencrypt:/etc/letsencrypt
 
   av:
     build: ./clamav
