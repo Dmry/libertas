@@ -13,4 +13,4 @@ services:
       - TZ=America/Chicago
     restart: unless-stopped
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - $XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock

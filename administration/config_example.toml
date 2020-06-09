@@ -5,6 +5,7 @@
 #          please replace!
 
 [general]
+    docker_user = "user"
     libertas_root = "/home/user/libertas" # NO TRAILING SLASHES!
     domain = "mydomain.com"
 
@@ -17,12 +18,7 @@
     [dockermail.server]
         [dockermail.server.passwords]
             mysql_user = "QzkLdTQs6E948nNc6CLTuuySq57Y"
-
-    [dockermail.client]
-        [dockermail.client.users]
-            [dockermail.client.user.myuser]
-                password = "some!convenient@$but*long^password*with&a)bit3of6randomness"
-
+            
 [traefik]
     acme_email = "user@mydomain.com"
 

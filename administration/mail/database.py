@@ -1,9 +1,11 @@
 import docker, os, sys, subprocess, getpass
 
-from utilities.utilities import check_root, ask_confirm, check_rendered
+from utilities.utilities import drop_priviledges, ask_confirm, check_rendered
 from base.template import get_config
 
 def get_database_container():
+    drop_priviledges()
+    
     client = docker.from_env()
 
     containers = client.containers.list()
@@ -14,8 +16,6 @@ def get_database_container():
 
 
 def exec_sql(container, sql):
-    check_root()
-
     config_data = get_config()
 
     container.exec_run("mysql -u root -p" + config_data['database']['passwords']['root'])
@@ -23,8 +23,6 @@ def exec_sql(container, sql):
 def clean():
     if not ask_confirm("This will remove ALL e-mail users and domains from database. Proceed?"):
         return
-
-    check_root()
 
     container = get_database_container()
 
@@ -35,8 +33,6 @@ def clean():
     exec_sql(container, "DELETE FROM `mailserver`.`virtual_domains`")
 
 def init_database():
-    check_root()
-
     container = get_database_container()
 
     script_location = '../database/scripts/db-init.sql'
@@ -49,8 +45,6 @@ def init_database():
 
 def add_user():
     from passlib.hash import bcrypt
-
-    check_root()
 
     container = get_database_container()
 

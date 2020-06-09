@@ -30,7 +30,8 @@ Services management
 '''
 
 services_function_map = {'install' : services.install,
-                         'disable' : services.disable}
+                         'disable' : services.disable,
+                         'clean'   : services.clean}
 
 parser_services = sub.add_parser('services', help='Set up and manage systemd services.')
 parser_services.add_argument('services_command', choices=services_function_map.keys())

@@ -21,7 +21,7 @@ services:
 #      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "$XDG_RUNTIME_DIR/docker.sock:/var/run/docker.sock"
       - "./dynamic_config:/dynamic_config:ro"
     networks:
       - frontend

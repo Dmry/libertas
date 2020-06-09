@@ -13,7 +13,7 @@ services:
     volumes:
       - dovecot_sasl:/var/spool/postfix/private/dovecot
       # for fail2ban
-      - /var/log/postfix/:/var/log/
+      # - /var/log/postfix/:/var/log/
       # opendkim config
       - /etc/opendkim/mail:/etc/opendkim/mail
       - /etc/letsencrypt:/etc/letsencrypt
@@ -34,7 +34,7 @@ services:
       - dovecot_sasl:/var/spool/postfix/private/dovecot
       - maildir:/mail
       # for fail2ban
-      - /var/log/dovecot/:/var/log/
+      # - /var/log/dovecot/:/var/log/
       - /etc/letsencrypt:/etc/letsencrypt
 
   av:
@@ -49,7 +49,6 @@ services:
       
 volumes:
   dovecot_sasl: {}
-  mysql_db: {}
   maildir: {}
 
 networks:
