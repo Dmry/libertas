@@ -18,6 +18,9 @@
     [dockermail.server]
         [dockermail.server.passwords]
             mysql_user = "QzkLdTQs6E948nNc6CLTuuySq57Y"
+
+[redis]
+    password = "zkLdTQsg7VqZjQPKA64UCT6"
             
 [traefik]
     acme_email = "user@mydomain.com"

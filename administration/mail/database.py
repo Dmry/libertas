@@ -1,10 +1,10 @@
 import docker, os, sys, subprocess, getpass
 
-from utilities.utilities import drop_priviledges, ask_confirm, check_rendered
+from utilities.utilities import drop_privileges, ask_confirm, check_rendered
 from base.template import get_config
 
 def get_database_container():
-    drop_priviledges()
+    drop_privileges()
     
     client = docker.from_env()
 
