@@ -1,5 +1,5 @@
 from utilities.utilities import check_root, ask_confirm, drop_privileges
-from template import get_config
+from base.template import get_config
 
 import os
 

@@ -1,7 +1,5 @@
 from jinja2 import Environment, FileSystemLoader
 
-from utilities.utilities import check_root, ask_confirm
-
 # Scoped import for toml below, as not to error upon dependency install
 
 # For finding template files
