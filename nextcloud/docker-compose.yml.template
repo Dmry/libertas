@@ -40,7 +40,17 @@ services:
       - MYSQL_HOST=mariadb
       - NEXTCLOUD_TRUSTED_DOMAINS={{ general.domain }}
       - NC_overwriteprotocol=https
+      - REDIS_HOST=redis
+      - REDIS_HOST_PASSWORD={{ redis.password }}
     restart: unless-stopped
+  redis:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf
+    container_name: nextcloud_redis
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - backend
 
 volumes:
   nextcloud_main: {}
