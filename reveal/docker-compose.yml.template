@@ -21,6 +21,9 @@ services:
       - "traefik.http.middlewares.reveal-headers.headers.stsIncludeSubdomains=true"
       - "traefik.http.middlewares.reveal-headers.headers.stsPreload=true"
       - "traefik.http.middlewares.reveal-headers.headers.stsSeconds=15552000"
+    volumes:
+      - ./reveal.js:/ext/reveal.js
+      - ./init.sh:/ext/init.sh
     networks:
       - frontend
 

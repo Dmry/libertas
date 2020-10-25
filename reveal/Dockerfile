@@ -6,4 +6,4 @@ RUN         apk --update add nodejs-npm setpriv
 
 RUN         cd reveal.js; npm install
 
-CMD         setpriv --reuid=reveal --regid=reveal --init-groups --reset-env npm start
+CMD         /ext/init
