@@ -1,6 +1,8 @@
 # For root check
 import sys, os, ntpath, pwd, grp
 
+from base.template import get_config
+
 def get_filename_from_path(path):
     head, tail = ntpath.split(path)
     return tail or ntpath.basename(head)
@@ -15,7 +17,7 @@ def drop_privileges():
         return
 
     # Get the uid/gid from the name
-    user_name = os.getenv("SUDO_USER")
+    user_name = get_config()['general']['docker_user']
     pwnam = pwd.getpwnam(user_name)
 
     # Remove group privileges

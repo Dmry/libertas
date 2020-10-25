@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+
+  app:
+    image: ./reveal
+    container_name: reveal_js
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.http.routers.reveal.entrypoints=websecure"
+      - "traefik.http.routers.reveal.rule=Host(`{{ general.domain }}/reveal`, `www.{{ general.domain }}/reveal`)"
+      - "traefik.http.routers.reveal.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.reveal.middlewares=reveal@docker"
+      - "traefik.http.middlewares.reveal.chain.middlewares=reveal-headers,reveal-https"
+      - "traefik.http.middlewares.reveal-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.reveal-https.redirectscheme.permanent=true"
+      - "traefik.http.middlewares.reveal-headers.headers.customFrameOptionsValue=SAMEORIGIN"
+      - "traefik.http.middlewares.reveal-headers.headers.framedeny=true"
+      - "traefik.http.middlewares.reveal-headers.headers.sslredirect=true"
+      - "traefik.http.middlewares.reveal-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.reveal-headers.headers.stsPreload=true"
+      - "traefik.http.middlewares.reveal-headers.headers.stsSeconds=15552000"
+    networks:
+      - frontend

@@ -1,4 +1,5 @@
 from utilities.utilities import check_root, ask_confirm, drop_privileges
+from template import get_config
 
 import os
 
@@ -36,6 +37,10 @@ def dependencies():
 
     os.system("sysctl --system")
 
+    user_name = get_config()['general']['docker_user']
+
+    os.system(f"loginctl enable-linger {user_name}")
+
     install_packages(package_list)
 
     drop_privileges()
@@ -48,6 +53,6 @@ def install_docker_rootless():
     os.system("export PATH=/home/$(whoami)/bin:$PATH")
     os.system("export XDG_RUNTIME_DIR=/run/user/$UID")
     os.system("export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock")
-    os.system("systemctl --user start docker")
+    os.system("systemctl --user --now enable docker")
     os.system("docker network create backend")
     os.system("docker network create frontend")

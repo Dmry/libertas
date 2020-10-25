@@ -4,7 +4,7 @@ from utilities.utilities import check_root, check_rendered, drop_privileges
 
 service_file_source = "services/libertas@.service"
 service_file_target = "/etc/systemd/user/libertas@.service"
-service_enabled_path = "/etc/systemd/user/multi-user.target.wants/"
+service_enabled_path = "/etc/systemd/user/default.target.wants"
 
 def install(target):
     check_root()

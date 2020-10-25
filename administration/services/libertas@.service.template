@@ -9,6 +9,7 @@ ExecStart=/usr/bin/docker-compose -f {{ general.libertas_root }}/%i/docker-compo
 ExecStop=/usr/bin/docker-compose -f {{ general.libertas_root }}/%i/docker-compose.yml down
 Restart=on-failure
 StartLimitInterval=30
+Environment="DOCKER_HOST=unix:///run/user/$UID/docker.sock"
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
