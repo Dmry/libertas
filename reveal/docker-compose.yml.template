@@ -3,7 +3,7 @@ version: "3.3"
 services:
 
   app:
-    build: ./reveal
+    build: .
     container_name: reveal_js
     labels:
       - "traefik.enable=true"
