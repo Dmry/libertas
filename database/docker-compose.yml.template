@@ -6,6 +6,8 @@ services:
     image: mariadb
     container_name: mariadb
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    security_opt:
+      - no-new-privileges
     networks:
       - backend
     expose:

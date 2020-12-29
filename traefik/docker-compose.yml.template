@@ -3,6 +3,8 @@ services:
   traefik:
     image: "traefik:latest"
     container_name: "traefik2"
+    security_opt:
+      - no-new-privileges
     command:
       #- "--log.level=DEBUG"
 #      - "--api.insecure=false"

@@ -49,6 +49,13 @@ def letsencrypt():
     with open("/var/spool/cron/crontabs/root", 'a') as file:
         file.write("0 4 1 * * letsencrypt renew")
 
+    # TODO: people will be happier when this is more strict
+
+    # TODO: fix UID in service template
+
+    # TODO: fix dmarc permissions
+
+    # TODO: fix fail2ban
 
     os.system("chmod -R 777 /etc/letsencrypt/live")
     os.system("chmod -R 777 /etc/letsencrypt/archive")

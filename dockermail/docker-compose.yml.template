@@ -5,6 +5,8 @@ services:
     build: ./postfix
     restart: on-failure
     container_name: postfix
+    security_opt:
+      - no-new-privileges
     ports:
       - "25:25"
     networks:
@@ -25,6 +27,8 @@ services:
     build: ./dovecot
     restart: on-failure
     container_name: dovecot
+    security_opt:
+      - no-new-privileges
     ports:
       - "993:993"
     networks:
@@ -40,6 +44,8 @@ services:
   av:
     build: ./clamav
     container_name: av
+    security_opt:
+      - no-new-privileges
     restart: on-failure
     networks:
       - default

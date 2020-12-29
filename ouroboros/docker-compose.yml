@@ -4,6 +4,8 @@ services:
     container_name: ouroboros
     hostname: ouroboros
     image: pyouroboros/ouroboros
+    security_opt:
+      - no-new-privileges
     environment:
       - CLEANUP=true
       - INTERVAL=300

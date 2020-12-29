@@ -5,6 +5,8 @@ services:
     image: matrixdotorg/synapse
     container_name: matrix-synapse
     restart: always
+    security_opt:
+      - no-new-privileges
     volumes:
       - data:/data
     labels:

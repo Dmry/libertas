@@ -5,6 +5,8 @@ services:
   app:
     image: nextcloud:latest
     container_name: nextcloud_app
+    security_opt:
+      - no-new-privileges
     networks:
       - frontend
       - backend
@@ -45,6 +47,8 @@ services:
     restart: unless-stopped
   redis:
     image: redis:latest
+    security_opt:
+      - no-new-privileges
     command: redis-server /usr/local/etc/redis/redis.conf
     container_name: nextcloud_redis
     volumes:

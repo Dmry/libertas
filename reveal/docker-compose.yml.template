@@ -5,6 +5,8 @@ services:
   app:
     build: .
     container_name: reveal_js
+    security_opt:
+      - no-new-privileges
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
